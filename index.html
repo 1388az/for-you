@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>فقط برای تو ♡</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+<style>
+  :root{
+    --bg1:#2a0a1f;
+    --bg2:#3d0f2e;
+    --bg3:#4b1438;
+    --accent:#d6336c;
+    --accent-soft:#ffb3cc;
+    --gold:#f5c26b;
+    --purple:#6a2c70;
+    --text:#fbe9f0;
+    --muted:#d9a9bd;
+    --glass: rgba(255,255,255,0.06);
+    --glass-border: rgba(255,255,255,0.12);
+    --danger:#ff5c7a;
+    --success:#7bd389;
+    --radius:18px;
+    --shadow: 0 10px 30px rgba(0,0,0,0.35);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;height:100%;}
+  body{
+    font-family: 'Vazirmatn', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    color:var(--text);
+    background:
+      radial-gradient(1200px 600px at 90% -10%, rgba(214,51,108,0.35), transparent 60%),
+      radial-gradient(900px 500px at -10% 110%, rgba(106,44,112,0.45), transparent 60%),
+      linear-gradient(160deg, var(--bg1), var(--bg2) 50%, var(--bg3));
+    min-height:100vh;
+    overflow-x:hidden;
+    padding-bottom: 96px;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:
+      radial-gradient(2px 2px at 20% 30%, rgba(255,255,255,0.5), transparent 50%),
+      radial-gradient(1.5px 1.5px at 70% 60%, rgba(255,255,255,0.4), transparent 50%),
+      radial-gradient(1px 1px at 40% 80%, rgba(255,255,255,0.35), transparent 50%);
+    pointer-events:none;
+    opacity:0.4;
+    z-index:0;
+  }
+  header.app-header{
+    position:sticky; top:0; z-index:10;
+    padding: 14px 16px 10px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    background: linear-gradient(180deg, rgba(42,10,31,0.85), rgba(42,10,31,0.4));
+    border-bottom:1px solid var(--glass-border);
+  }
+  header.app-header h1{
+    margin:0; font-size:20px; font-weight:700;
+    background: linear-gradient(90deg, var(--accent-soft), var(--gold));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    letter-spacing:0.3px;
+  }
+  header .sub{font-size:12px; color:var(--muted); margin-top:2px;}
+  main{position:relative; z-index:1; padding: 14px 14px 8px;}
+  .view{animation: fadeUp .35s ease both;}
+  @keyframes fadeUp{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;}}
+
+  .card{
+    background: var(--glass);
+    border:1px solid var(--glass-border);
+    border-radius: var(--radius);
+    padding: 16px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
+    margin-bottom: 12px;
+  }
+  .card.hero{
+    background: linear-gradient(135deg, rgba(214,51,108,0.25), rgba(106,44,112,0.25));
+    border:1px solid rgba(245,194,107,0.25);
+  }
+  .card h2{margin:0 0 8px; font-size:16px; color:var(--accent-soft);}
+  .card p{margin:4px 0; color:var(--text); line-height:1.8;}
+  .muted{color:var(--muted);}
+  .tiny{font-size:12px;}
+
+  .counter-grid{
+    display:grid; grid-template-columns: repeat(3, 1fr); gap:10px; margin-top:10px;
+  }
+  .counter-cell{
+    background: rgba(255,255,255,0.05);
+    border:1px solid var(--glass-border);
+    border-radius: 14px;
+    padding:10px; text-align:center;
+  }
+  .counter-cell .n{font-size:22px; font-weight:800; color:var(--gold);}
+  .counter-cell .l{font-size:11px; color:var(--muted); margin-top:2px;}
+
+  .big-num{
+    font-size: 42px; font-weight:900; letter-spacing:1px;
+    background: linear-gradient(90deg, var(--gold), var(--accent-soft));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    text-align:center;
+  }
+  .big-lbl{text-align:center; color:var(--muted); font-size:12px; margin-top:-2px;}
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:6px;
+    padding: 11px 14px; border-radius: 14px;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    color:#fff; border:none; font-family:inherit; font-size:14px; font-weight:600;
+    cursor:pointer; box-shadow: 0 8px 20px rgba(214,51,108,0.35);
+    transition: transform .15s ease, box-shadow .2s ease;
+    width:100%;
+  }
+  .btn:active{transform: translateY(1px) scale(0.99);}
+  .btn.secondary{
+    background: rgba(255,255,255,0.08);
+    border:1px solid var(--glass-border);
+    box-shadow:none;
+  }
+  .btn.ghost{
+    background: transparent; border:1px solid var(--glass-border);
+    box-shadow:none;
+  }
+  .btn.danger{background: linear-gradient(135deg, #ff5c7a, #b02a45);}
+  .btn.small{padding:8px 10px; font-size:12px; border-radius:10px; width:auto;}
+  .btn-row{display:flex; gap:8px; flex-wrap:wrap;}
+  .btn-row .btn{flex:1; min-width:120px;}
+
+  .menu-grid{
+    display:grid; grid-template-columns: repeat(2, 1fr); gap:10px;
+  }
+  .menu-item{
+    background: var(--glass);
+    border:1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 14px;
+    cursor:pointer;
+    text-align:center;
+    transition: transform .15s ease, background .2s ease;
+  }
+  .menu-item:active{transform: scale(0.98);}
+  .menu-item .ic{font-size:24px; display:block; margin-bottom:6px;}
+  .menu-item .tt{font-size:13px; font-weight:600;}
+
+  .list{display:flex; flex-direction:column; gap:10px;}
+  .list-item{
+    background: var(--glass);
+    border:1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 12px;
+    cursor:pointer;
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+  }
+  .list-item .t{font-weight:600; font-size:14px;}
+  .list-item .s{font-size:11px; color:var(--muted); margin-top:2px;}
+  .list-item.unread{border-color: rgba(245,194,107,0.5); box-shadow: 0 0 0 1px rgba(245,194,107,0.25) inset;}
+
+  .search{
+    width:100%; padding:11px 14px; border-radius: 14px;
+    background: rgba(255,255,255,0.06);
+    border:1px solid var(--glass-border);
+    color:var(--text); font-family:inherit; font-size:14px;
+    outline:none;
+  }
+  .search:focus{border-color: var(--accent-soft);}
+
+  .input, .textarea{
+    width:100%; padding:11px 14px; border-radius: 14px;
+    background: rgba(255,255,255,0.06);
+    border:1px solid var(--glass-border);
+    color:var(--text); font-family:inherit; font-size:14px;
+    outline:none;
+  }
+  .textarea{min-height:120px; resize:vertical; line-height:1.8;}
+  .label{display:block; font-size:12px; color:var(--muted); margin: 10px 0 6px;}
+
+  .chip{
+    display:inline-flex; align-items:center; gap:4px;
+    padding: 4px 10px; border-radius: 999px;
+    background: rgba(255,255,255,0.08);
+    border:1px solid var(--glass-border);
+    font-size:11px; color:var(--muted);
+  }
+  .chip.gold{color: var(--gold); border-color: rgba(245,194,107,0.4);}
+
+  .bottom-nav{
+    position: fixed; bottom: 0; left:0; right:0; z-index: 20;
+    display:flex; justify-content:space-around;
+    padding: 8px 6px calc(8px + env(safe-area-inset-bottom));
+    background: linear-gradient(180deg, rgba(42,10,31,0.4), rgba(42,10,31,0.95));
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top:1px solid var(--glass-border);
+  }
+  .nav-btn{
+    flex:1; padding:8px 4px; text-align:center;
+    background: transparent; border:none; color:var(--muted);
+    font-family:inherit; font-size:11px; cursor:pointer;
+    border-radius: 12px;
+  }
+  .nav-btn .ic{font-size:20px; display:block; margin-bottom:2px;}
+  .nav-btn.active{color: var(--accent-soft); background: rgba(214,51,108,0.15);}
+
+  .empty{
+    text-align:center; padding: 30px 10px; color:var(--muted);
+  }
+  .empty .ic{font-size:40px; opacity:0.7; margin-bottom:8px;}
+
+  .recorder{
+    display:flex; flex-direction:column; align-items:center; gap:12px; padding:10px;
+  }
+  .rec-circle{
+    width:120px; height:120px; border-radius:50%;
+    background: radial-gradient(circle at 30% 30%, #ff7aa2, #b02a45);
+    display:flex; align-items:center; justify-content:center;
+    font-size:40px; color:#fff;
+    box-shadow: 0 10px 30px rgba(176,42,69,0.5);
+    cursor:pointer;
+    transition: transform .2s ease;
+  }
+  .rec-circle.recording{animation: pulse 1.2s infinite;}
+  @keyframes pulse{
+    0%,100%{transform:scale(1); box-shadow:0 10px 30px rgba(176,42,69,0.5);}
+    50%{transform:scale(1.05); box-shadow:0 10px 40px rgba(255,92,122,0.7);}
+  }
+  .rec-time{font-size:28px; font-weight:800; color:var(--gold); font-variant-numeric: tabular-nums;}
+
+  .gallery{
+    display:grid; grid-template-columns: repeat(2, 1fr); gap:10px;
+  }
+  .photo-tile{
+    position:relative; aspect-ratio: 1/1;
+    border-radius: 14px; overflow:hidden;
+    background: rgba(255,255,255,0.05);
+    border:1px solid var(--glass-border);
+    cursor:pointer;
+  }
+  .photo-tile img{width:100%; height:100%; object-fit:cover; display:block;}
+  .photo-tile .cap{
+    position:absolute; left:0; right:0; bottom:0;
+    padding:6px 8px; font-size:11px;
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,0.7));
+    color:#fff;
+  }
+
+  .modal{
+    position:fixed; inset:0; z-index:50;
+    background: rgba(10,2,8,0.7);
+    backdrop-filter: blur(6px);
+    display:flex; align-items:center; justify-content:center;
+    padding:16px;
+    animation: fadeUp .25s ease both;
+  }
+  .modal .box{
+    width:100%; max-width:480px; max-height:90vh; overflow:auto;
+    background: linear-gradient(160deg, #3a0f2c, #2a0a1f);
+    border:1px solid var(--glass-border);
+    border-radius: 18px;
+    padding:16px;
+  }
+  .modal img.full{width:100%; border-radius:12px;}
+
+  .letter{
+    position:relative;
+    background: linear-gradient(160deg, #f8e3c6, #e8c39a);
+    color:#4a2511;
+    border-radius: 16px;
+    padding: 20px 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  }
+  .letter::before{
+    content:"💌"; position:absolute; top:-14px; right:16px;
+    font-size:28px;
+  }
+  .letter h3{margin:0 0 8px; color:#7a2e1a; font-size:16px;}
+  .letter p{margin:0; line-height:2; white-space:pre-wrap;}
+  .letter .date{font-size:11px; color:#8a4a2a; margin-top:10px;}
+
+  .event-card{
+    display:flex; align-items:center; gap:12px;
+    background: var(--glass);
+    border:1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 12px;
+  }
+  .event-card .d{
+    min-width:58px; text-align:center;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    border-radius: 12px; padding:8px;
+  }
+  .event-card .d .n{font-size:20px; font-weight:800; color:#fff;}
+  .event-card .d .l{font-size:10px; color:rgba(255,255,255,0.8);}
+  .event-card .info .t{font-weight:700; font-size:14px;}
+  .event-card .info .s{font-size:11px; color:var(--muted); margin-top:2px;}
+
+  .toast{
+    position:fixed; bottom: 110px; left:50%; transform:translateX(-50%);
+    background: rgba(20,5,15,0.95);
+    color:#fff; padding:10px 16px; border-radius: 999px;
+    border:1px solid var(--glass-border);
+    font-size:13px; z-index:100;
+    animation: fadeUp .25s ease both;
+  }
+  .toast.error{border-color: var(--danger); color:#ffd0d8;}
+  .toast.success{border-color: var(--success); color:#d8ffe0;}
+
+  .back-btn{
+    display:inline-flex; align-items:center; gap:6px;
+    background: transparent; border:none; color:var(--accent-soft);
+    font-family:inherit; font-size:13px; cursor:pointer; padding:4px 0;
+  }
+
+  .switch{
+    display:inline-flex; align-items:center; gap:8px;
+    padding: 8px 12px; background: var(--glass);
+    border:1px solid var(--glass-border); border-radius: 999px;
+    font-size:12px;
+  }
+  .switch input{accent-color: var(--accent);}
+
+  .loading{
+    text-align:center; padding:30px; color:var(--muted);
+  }
+  .spinner{
+    width:30px; height:30px; margin: 0 auto 10px;
+    border:3px solid rgba(255,255,255,0.1);
+    border-top-color: var(--accent-soft);
+    border-radius:50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  @media (min-width: 640px){
+    main{max-width: 640px; margin: 0 auto;}
+  }
+</style>
+</head>
+<body>
+<header class="app-header">
+  <h1 id="app-title">فقط برای تو ♡</h1>
+  <div class="sub" id="app-sub">در حال بارگذاری...</div>
+</header>
+
+<main id="view">
+  <div class="loading"><div class="spinner"></div>لطفاً صبر کن...</div>
+</main>
+
+<nav class="bottom-nav" id="bottom-nav">
+  <button class="nav-btn active" data-view="home"><span class="ic">💗</span>خانه</button>
+  <button class="nav-btn" data-view="memories"><span class="ic">📖</span>خاطرات</button>
+  <button class="nav-btn" data-view="voice"><span class="ic">🎙</span>ویس</button>
+  <button class="nav-btn" data-view="gallery"><span class="ic">🖼</span>گالری</button>
+  <button class="nav-btn" data-view="more"><span class="ic">⋯</span>بیشتر</button>
+</nav>
+
+<script>
+(function(){
+  'use strict';
+
+  const tg = window.Telegram && window.Telegram.WebApp;
+  if (tg) {
+    try { tg.ready(); tg.expand(); } catch(e){}
+    try { tg.setHeaderColor && tg.setHeaderColor('#2a0a1f'); } catch(e){}
+    try { tg.setBackgroundColor && tg.setBackgroundColor('#2a0a1f'); } catch(e){}
+  }
+
+  const $ = (sel, root=document) => root.querySelector(sel);
+  const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+  const view = $('#view');
+  const sub = $('#app-sub');
+
+  const state = {
+    user: null,
+    currentView: 'home',
+    counter: null,
+    stats: null,
+    events: [],
+    memoryOfDay: null,
+  };
+
+  function toast(msg, type='info'){
+    const t = document.createElement('div');
+    t.className = 'toast ' + (type==='error'?'error':type==='success'?'success':'');
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(()=>{ t.style.opacity='0'; t.style.transition='opacity .3s'; }, 1800);
+    setTimeout(()=> t.remove(), 2300);
+  }
+
+  async function api(path, options={}){
+    const initData = (tg && tg.initData) || '';
+    const headers = Object.assign({
+      'X-Telegram-Init-Data': initData,
+    }, options.headers || {});
+    const opts = Object.assign({ headers }, options);
+    if (!(opts.body instanceof FormData) && opts.body && typeof opts.body === 'object' && !opts.headers?.['Content-Type']) {
+      opts.headers['Content-Type'] = 'application/json';
+      opts.body = JSON.stringify(opts.body);
+    }
+    const res = await fetch('/api' + path, opts);
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); } catch(e){ data = { raw: text }; }
+    if (!res.ok) {
+      const err = new Error(data.error || ('HTTP ' + res.status));
+      err.status = res.status;
+      err.data = data;
+      throw err;
+    }
+    return data;
+  }
+
+  async function auth(){
+    try {
+      const data = await api('/auth', { method:'POST' });
+      state.user = data.user;
+      sub.textContent = data.user?.first_name ? `سلام ${data.user.first_name} ♡` : 'فضای خصوصی ما';
+      return true;
+    } catch(e){
+      view.innerHTML = `
+        <div class="card">
+          <h2>⛔️ دسترسی محدود</h2>
+          <p>این مینی‌اپ فقط برای کاربران مجاز است.</p>
+          <p class="muted tiny">اگر از داخل تلگرام باز نکرده‌ای، از دکمه‌ی «🖥 باز کردن مینی‌اپ» در ربات استفاده کن.</p>
+        </div>`;
+      return false;
+    }
+  }
+
+  async function loadHome(){
+    try {
+      const data = await api('/counter');
+      state.counter = data.counter;
+      state.stats = data.stats;
+      state.events = data.events || [];
+      state.memoryOfDay = data.memory_of_day;
+    } catch(e){
+      toast('خطا در بارگذاری', 'error');
+    }
+  }
+
+  function renderHome(){
+    const c = state.counter || {};
+    const s = state.stats || { memories:0, photos:0, voices:0 };
+    const mod = state.memoryOfDay;
+    view.innerHTML = `
+      <div class="view">
+        <div class="card hero">
+          <h2>💗 روزشمار رابطه‌ی ما</h2>
+          <div class="big-num">${c.total_days ?? 0}</div>
+          <div class="big-lbl">روز عاشقی</div>
+          <div class="counter-grid">
+            <div class="counter-cell"><div class="n">${c.years ?? 0}</div><div class="l">سال</div></div>
+            <div class="counter-cell"><div class="n">${c.months ?? 0}</div><div class="l">ماه</div></div>
+            <div class="counter-cell"><div class="n">${c.remaining_days ?? 0}</div><div class="l">روز</div></div>
+          </div>
+          <p class="tiny muted" style="margin-top:10px;">
+            شروع: ${c.start_date_fa || '-'} &nbsp;•&nbsp;
+            امروز: ${c.today_fa || '-'}
+          </p>
+          <p class="tiny" style="margin-top:6px;">
+            🎂 سالگرد بعدی: <b>${c.next_anniversary_fa || '-'}</b>
+            <span class="chip gold" style="margin-right:6px;">${c.days_to_anniversary ?? '-'} روز مانده</span>
+          </p>
+        </div>
+
+        ${mod ? `
+        <div class="card">
+          <h2>✨ خاطره‌ی امروز</h2>
+          <p style="font-weight:600;">${escapeHtml(mod.title || '')}</p>
+          <p class="muted tiny">${escapeHtml((mod.text || '').slice(0,180))}${(mod.text||'').length>180?'…':''}</p>
+          <button class="btn secondary small" data-action="open-memory" data-id="${mod.id}" style="margin-top:8px;">مشاهده خاطره</button>
+        </div>` : `
+        <div class="card">
+          <h2>✨ خاطره‌ی امروز</h2>
+          <p class="muted">هنوز خاطره‌ای ثبت نکردی. اولین خاطره‌ات را بساز ♡</p>
+        </div>`}
+
+        <div class="card">
+          <h2>📊 آمار ما</h2>
+          <div class="counter-grid">
+            <div class="counter-cell"><div class="n">${s.memories}</div><div class="l">خاطره</div></div>
+            <div class="counter-cell"><div class="n">${s.photos}</div><div class="l">عکس</div></div>
+            <div class="counter-cell"><div class="n">${s.voices}</div><div class="l">ویس</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>🌷 مناسبت‌های پیش‌رو</h2>
+          ${state.events.length ? state.events.map(e=>`
+            <div class="event-card" style="margin-bottom:8px;">
+              <div class="d"><div class="n">${e.days_left}</div><div class="l">روز</div></div>
+              <div class="info">
+                <div class="t">${escapeHtml(e.title)}</div>
+                <div class="s">${escapeHtml(e.date_fa || '')}</div>
+              </div>
+            </div>`).join('') : '<p class="muted">مناسبتی ثبت نشده.</p>'}
+        </div>
+
+        <div class="menu-grid">
+          <div class="menu-item" data-nav="memories"><span class="ic">📖</span><div class="tt">دفتر خاطرات</div></div>
+          <div class="menu-item" data-nav="voice"><span class="ic">🎙</span><div class="tt">ضبط ویس</div></div>
+          <div class="menu-item" data-nav="gallery"><span class="ic">🖼</span><div class="tt">گالری</div></div>
+          <div class="menu-item" data-nav="letters"><span class="ic">💌</span><div class="tt">نامه‌ها</div></div>
+          <div class="menu-item" data-nav="events"><span class="ic">🌷</span><div class="tt">مناسبت‌ها</div></div>
+          <div class="menu-item" data-nav="settings"><span class="ic">⚙️</span><div class="tt">تنظیمات</div></div>
+        </div>
+      </div>
+    `;
+    bindHome();
+  }
+
+  function bindHome(){
+    $$('.menu-item').forEach(el => el.addEventListener('click', ()=> navigate(el.dataset.nav)));
+    const openMem = $('[data-action="open-memory"]');
+    if (openMem) openMem.addEventListener('click', ()=> openMemoryDetail(parseInt(openMem.dataset.id,10)));
+  }
+
+  // ---------- Memories ----------
+  async function renderMemories(){
+    view.innerHTML = `<div class="loading"><div class="spinner"></div>در حال بارگذاری...</div>`;
+    try {
+      const data = await api('/memories');
+      const items = data.items || [];
+      view.innerHTML = `
+        <div class="view">
+          <div class="card">
+            <h2>📖 دفتر خاطرات</h2>
+            <input class="search" id="mem-search" placeholder="جست‌وجو در خاطرات..." />
+            <div style="margin-top:10px;">
+              <button class="btn" id="mem-new">➕ ثبت خاطره جدید</button>
+            </div>
+          </div>
+          <div class="list" id="mem-list">
+            ${items.length ? items.map(m=>`
+              <div class="list-item" data-id="${m.id}">
+                <div>
+                  <div class="t">${escapeHtml(m.title)}</div>
+                  <div class="s">${escapeHtml(m.memory_date || '')}</div>
+                </div>
+                <div>‹</div>
+              </div>`).join('') : `<div class="empty"><div class="ic">📖</div>هنوز خاطره‌ای ثبت نشده.</div>`}
+          </div>
+        </div>
+      `;
+      $('#mem-new').addEventListener('click', openMemoryForm);
+      $('#mem-search').addEventListener('input', debounce(async (e)=>{
+        const q = e.target.value.trim();
+        const data = await api('/memories?q=' + encodeURIComponent(q));
+        const items = data.items || [];
+        $('#mem-list').innerHTML = items.length ? items.map(m=>`
+          <div class="list-item" data-id="${m.id}">
+            <div>
+              <div class="t">${escapeHtml(m.title)}</div>
+              <div class="s">${escapeHtml(m.memory_date || '')}</div>
+            </div>
+            <div>‹</div>
+          </div>`).join('') : `<div class="empty"><div class="ic">🔍</div>چیزی پیدا نشد.</div>`;
+        bindMemList();
+      }, 300));
+      bindMemList();
+    } catch(e){
+      view.innerHTML = `<div class="card"><p>خطا در بارگذاری خاطرات.</p></div>`;
+    }
+  }
+
+  function bindMemList(){
+    $$('#mem-list .list-item').forEach(el => {
+      el.addEventListener('click', ()=> openMemoryDetail(parseInt(el.dataset.id,10)));
+    });
+  }
+
+  async function openMemoryDetail(id){
+    view.innerHTML = `<div class="loading"><div class="spinner"></div>در حال بارگذاری...</div>`;
+    try {
+      const data = await api('/memories/' + id);
+      const m = data.item;
+      view.innerHTML = `
+        <div class="view">
+          <button class="back-btn" data-back="memories">→ بازگشت به خاطرات</button>
+          <div class="card">
+            <h2>${escapeHtml(m.title)}</h2>
+            <p class="muted tiny">${escapeHtml(m.memory_date || '')}</p>
+            <p style="white-space:pre-wrap; line-height:2;">${escapeHtml(m.text || '')}</p>
+            ${m.photo_path ? `
+              <div style="margin-top:10px;">
+                <img src="/api/files/photos/${m.id}" style="width:100%; border-radius:12px;" data-full="1" />
+              </div>` : ''}
+            ${m.voice_path ? `
+              <div style="margin-top:10px;">
+                <audio controls src="/api/files/voices/${m.id}" style="width:100%;"></audio>
+              </div>` : ''}
+            <div class="btn-row" style="margin-top:12px;">
+              <button class="btn secondary" id="mem-edit">✏️ ویرایش</button>
+              <button class="btn danger" id="mem-del">🗑 حذف</button>
+            </div>
+          </div>
+        </div>
+      `;
+      $('[data-back]').addEventListener('click', ()=> navigate('memories'));
+      const imgFull = $('[data-full]');
+      if (imgFull) imgFull.addEventListener('click', ()=> showImageModal(imgFull.src));
+      $('#mem-edit').addEventListener('click', ()=> openMemoryForm(m));
+      $('#mem-del').addEventListener('click', async ()=>{
+        if (!confirm('مطمئنی می‌خوای این خاطره حذف شود؟')) return;
+        try {
+          await api('/memories/' + id, { method:'DELETE' });
+          toast('حذف شد', 'success');
+          navigate('memories');
+        } catch(e){ toast('خطا در حذف', 'error'); }
+      });
+    } catch(e){
+      view.innerHTML = `<div class="card"><p>خطا در بارگذاری خاطره.</p></div>`;
+    }
+  }
+
+  function openMemoryForm(existing){
+    const isEdit = !!existing;
+    const overlay = document.createElement('div');
+    overlay.className = 'modal';
+    overlay.innerHTML = `
+      <div class="box">
+        <h2 style="margin:0 0 10px;">${isEdit ? '✏️ ویرایش خاطره' : '➕ خاطره جدید'}</h2>
+        <label class="label">عنوان</label>
+        <input class="input" id="f-title" value="${escapeHtml(existing?.title || '')}" />
+        <label class="label">متن خاطره</label>
+        <textarea class="textarea" id="f-text">${escapeHtml(existing?.text || '')}</textarea>
+        <label class="label">تاریخ (اختیاری)</label>
+        <input class="input" id="f-date" placeholder="مثلاً ۱۲ مهر ۱۴۰۵" value="${escapeHtml(existing?.memory_date || '')}" />
+        <div class="btn-row" style="margin-top:12px;">
+          <button class="btn" id="f-save">${isEdit ? 'ذخیره تغییرات' : 'ذخیره خاطره'}</button>
+          <button class="btn ghost" id="f-cancel">انصراف</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.querySelector('#f-cancel').addEventListener('click', ()=> overlay.remove());
+    overlay.addEventListener('click', (e)=>{ if (e.target === overlay) overlay.remove(); });
+    overlay.querySelector('#f-save').addEventListener('click', async ()=>{
+      const title = overlay.querySelector('#f-title').value.trim();
+      const text = overlay.querySelector('#f-text').value.trim();
+      const memory_date = overlay.querySelector('#f-date').value.trim();
+      if (!title) { toast('عنوان لازم است', 'error'); return; }
+      try {
+        if (isEdit) {
+          await api('/memories/' + existing.id, { method:'PUT', body:{ title, text, memory_date } });
+          toast('بروزرسانی شد', 'success');
+        } else {
+          await api('/memories', { method:'POST', body:{ title, text, memory_date } });
+          toast('خاطره ذخیره شد ♡', 'success');
+        }
+        overlay.remove();
+        navigate('memories');
+      } catch(e){ toast('خطا در ذخیره', 'error'); }
+    });
+  }
+
+  // ---------- Voice recorder ----------
+  let mediaRecorder = null;
+  let recordedChunks = [];
+  let recordStart = 0;
+  let recordTimer = null;
+
+  function renderVoice(){
+    view.innerHTML = `
+      <div class="view">
+        <div class="card">
+          <h2>🎙 ضبط صدای تو</h2>
+          <p class="muted tiny">برای ضبط، روی دکمه بزن و صحبت کن. قبل از ذخیره می‌توانی پیش‌نمایش کنی.</p>
+          <div class="recorder">
+            <div class="rec-circle" id="rec-btn">🎙</div>
+            <div class="rec-time" id="rec-time">00:00</div>
+            <div id="rec-status" class="muted tiny">آماده ضبط</div>
+          </div>
+          <div id="rec-preview" style="display:none; margin-top:10px;">
+            <audio id="rec-audio" controls style="width:100%;"></audio>
+            <div class="btn-row" style="margin-top:10px;">
+              <button class="btn" id="rec-save">💾 ذخیره ویس</button>
+              <button class="btn ghost" id="rec-discard">🗑 دور انداختن</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>🎚 ویس‌های من</h2>
+          <div id="voice-list" class="list"></div>
+        </div>
+      </div>
+    `;
+    loadVoiceList();
+    const btn = $('#rec-btn');
+    btn.addEventListener('click', toggleRecord);
+    $('#rec-save').addEventListener('click', saveVoice);
+    $('#rec-discard').addEventListener('click', resetRecorder);
+  }
+
+  async function toggleRecord(){
+    const btn = $('#rec-btn');
+    const status = $('#rec-status');
+    if (mediaRecorder && mediaRecorder.state === 'recording') {
+      mediaRecorder.stop();
+      return;
+    }
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      let mime = 'audio/webm;codecs=opus';
+      if (!MediaRecorder.isTypeSupported(mime)) mime = 'audio/webm';
+      if (!MediaRecorder.isTypeSupported(mime)) mime = 'audio/ogg;codecs=opus';
+      if (!MediaRecorder.isTypeSupported(mime)) mime = '';
+      const opts = mime ? { mimeType: mime } : {};
+      mediaRecorder = new MediaRecorder(stream, opts);
+      recordedChunks = [];
+      mediaRecorder.ondataavailable = (e)=> { if (e.data && e.data.size>0) recordedChunks.push(e.data); };
+      mediaRecorder.onstop = ()=> {
+        stream.getTracks().forEach(t=>t.stop());
+        const blob = new Blob(recordedChunks, { type: opts.mimeType || 'audio/webm' });
+        const url = URL.createObjectURL(blob);
+        $('#rec-audio').src = url;
+        $('#rec-preview').style.display = 'block';
+        btn.classList.remove('recording');
+        btn.textContent = '🎙';
+        status.textContent = 'ضبط تمام شد. می‌تونی پیش‌نمایش کنی.';
+        clearInterval(recordTimer);
+      };
+      mediaRecorder.start();
+      recordStart = Date.now();
+      btn.classList.add('recording');
+      btn.textContent = '⏹';
+      status.textContent = 'در حال ضبط...';
+      recordTimer = setInterval(()=>{
+        const s = Math.floor((Date.now() - recordStart)/1000);
+        const mm = String(Math.floor(s/60)).padStart(2,'0');
+        const ss = String(s%60).padStart(2,'0');
+        $('#rec-time').textContent = `${mm}:${ss}`;
+      }, 500);
+    } catch(e){
+      toast('دسترسی به میکروفون ممکن نیست. می‌توانی از ربات ویس بفرستی.', 'error');
+    }
+  }
+
+  function resetRecorder(){
+    recordedChunks = [];
+    $('#rec-preview').style.display = 'none';
+    $('#rec-audio').src = '';
+    $('#rec-time').textContent = '00:00';
+    $('#rec-status').textContent = 'آماده ضبط';
+  }
+
+  async function saveVoice(){
+    if (!recordedChunks.length) { toast('چیزی ضبط نشده', 'error'); return; }
+    const title = prompt('عنوان ویس:') || 'ویس ' + new Date().toLocaleString('fa-IR');
+    const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+    const fd = new FormData();
+    fd.append('voice', blob, 'voice.webm');
+    fd.append('title', title);
+    fd.append('duration', String(Math.floor((Date.now() - recordStart)/1000)));
+    try {
+      await api('/voices', { method:'POST', body: fd, headers: {} });
+      toast('ویس ذخیره شد ♡', 'success');
+      resetRecorder();
+      loadVoiceList();
+    } catch(e){ toast('خطا در ذخیره ویس', 'error'); }
+  }
+
+  async function loadVoiceList(){
+    const list = $('#voice-list');
+    if (!list) return;
+    try {
+      const data = await api('/voices');
+      const items = data.items || [];
+      list.innerHTML = items.length ? items.map(v=>`
+        <div class="list-item" data-id="${v.id}">
+          <div>
+            <div class="t">🎙 ${escapeHtml(v.title || 'ویس')}</div>
+            <div class="s">${v.duration ? v.duration + ' ثانیه' : ''} • ${escapeHtml((v.created_at||'').slice(0,10))}</div>
+          </div>
+          <div class="btn-row" style="gap:6px;">
+            <button class="btn small secondary" data-play="${v.id}">▶</button>
+            <button class="btn small danger" data-del="${v.id}">🗑</button>
+          </div>
+        </div>`).join('') : `<div class="empty"><div class="ic">🎙</div>هنوز ویسی ضبط نکردی.</div>`;
+      list.querySelectorAll('[data-play]').forEach(b => b.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        playVoice(parseInt(b.dataset.play,10));
+      }));
+      list.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', async (e)=>{
+        e.stopPropagation();
+        if (!confirm('حذف این ویس؟')) return;
+        try {
+          await api('/voices/' + b.dataset.del, { method:'DELETE' });
+          toast('حذف شد', 'success');
+          loadVoiceList();
+        } catch(err){ toast('خطا', 'error'); }
+      }));
+    } catch(e){
+      list.innerHTML = `<div class="empty">خطا در بارگذاری.</div>`;
+    }
+  }
+
+  function playVoice(id){
+    const overlay = document.createElement('div');
+    overlay.className = 'modal';
+    overlay.innerHTML = `
+      <div class="box">
+        <h2>🎙 پخش ویس</h2>
+        <audio controls autoplay src="/api/files/voices/${id}" style="width:100%;"></audio>
+        <div class="btn-row" style="margin-top:12px;">
+          <button class="btn ghost" id="close-play">بستن</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.querySelector('#close-play').addEventListener('click', ()=> overlay.remove());
+    overlay.addEventListener('click', (e)=>{ if (e.target===overlay) overlay.remove(); });
+  }
+
+  // ---------- Gallery ----------
+  async function renderGallery(){
+    view.innerHTML = `
+      <div class="view">
+        <div class="card">
+          <h2>🖼 گالری عکس‌ها</h2>
+          <div class="btn-row">
+            <button class="btn" id="gal-add">➕ افزودن عکس</button>
+          </div>
+          <input type="file" id="gal-file" accept="image/*" style="display:none;" />
+        </div>
+        <div class="gallery" id="gal-grid"></div>
+      </div>
+    `;
+    $('#gal-add').addEventListener('click', ()=> $('#gal-file').click());
+    $('#gal-file').addEventListener('change', onGalleryPick);
+    loadGallery();
+  }
+
+  async function loadGallery(){
+    const grid = $('#gal-grid');
+    if (!grid) return;
+    try {
+      const data = await api('/gallery');
+      const items = data.items || [];
+      grid.innerHTML = items.length ? items.map(p=>`
+        <div class="photo-tile" data-id="${p.id}">
+          <img src="/api/files/photos/${p.id}" alt="" loading="lazy" />
+          <div class="cap">${escapeHtml((p.title||'').slice(0,28))}</div>
+        </div>`).join('') : `<div class="empty" style="grid-column: 1/-1;"><div class="ic">🖼</div>گالری خالی است.</div>`;
+      grid.querySelectorAll('.photo-tile').forEach(el => {
+        el.addEventListener('click', ()=> openPhotoDetail(parseInt(el.dataset.id,10)));
+      });
+    } catch(e){
+      grid.innerHTML = `<div class="empty" style="grid-column:1/-1;">خطا در بارگذاری.</div>`;
+    }
+  }
+
+  async function onGalleryPick(e){
+    const f = e.target.files[0];
+    if (!f) return;
+    if (f.size > 10*1024*1024) { toast('حجم عکس بیش از ۱۰ مگابایت است', 'error'); return; }
+    const title = prompt('عنوان عکس:') || f.name;
+    const description = prompt('توضیح (اختیاری):') || '';
+    const fd = new FormData();
+    fd.append('photo', f);
+    fd.append('title', title);
+    fd.append('description', description);
+    try {
+      await api('/gallery', { method:'POST', body: fd, headers: {} });
+      toast('عکس افزوده شد ♡', 'success');
+      loadGallery();
+    } catch(err){ toast('خطا در آپلود', 'error'); }
+    e.target.value = '';
+  }
+
+  function openPhotoDetail(id){
+    const overlay = document.createElement('div');
+    overlay.className = 'modal';
+    overlay.innerHTML = `
+      <div class="box">
+        <img class="full" src="/api/files/photos/${id}" />
+        <div class="btn-row" style="margin-top:12px;">
+          <button class="btn danger" id="ph-del">🗑 حذف</button>
+          <button class="btn ghost" id="ph-close">بستن</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.querySelector('#ph-close').addEventListener('click', ()=> overlay.remove());
+    overlay.querySelector('#ph-del').addEventListener('click', async ()=>{
+      if (!confirm('حذف این عکس؟')) return;
+      try {
+        await api('/gallery/' + id, { method:'DELETE' });
+        toast('حذف شد', 'success');
+        overlay.remove();
+        loadGallery();
+      } catch(err){ toast('خطا', 'error'); }
+    });
+    overlay.addEventListener('click', (e)=>{ if (e.target===overlay) overlay.remove(); });
+  }
+
+  function showImageModal(src){
+    const overlay = document.createElement('div');
+    overlay.className = 'modal';
+    overlay.innerHTML = `
+      <div class="box">
+        <img class="full" src="${src}" />
+        <div class="btn-row" style="margin-top:12px;">
+          <button class="btn ghost" id="im-close">بستن</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.querySelector('#im-close').addEventListener('click', ()=> overlay.remove());
+    overlay.addEventListener('click', (e)=>{ if (e.target===overlay) overlay.remove(); });
+  }
+
+  // ---------- Letters ----------
+  async function renderLetters(){
+    view.innerHTML = `<div class="loading"><div class="spinner"></div>در حال بارگذاری...</div>`;
+    try {
+      const data = await api('/letters');
+      const items = data.items || [];
+      view.innerHTML = `
+        <div class="view">
+          <div class="card">
+            <h2>💌 نامه‌های عاشقانه</h2>
+            <p class="muted tiny">نامه‌هایی که برات فرستاده شده.</p>
+          </div>
+          <div class="list" id="let-list">
+            ${items.length ? items.map(l=>`
+              <div class="list-item ${l.is_read?'':'unread'}" data-id="${l.id}">
+                <div>
+                  <div class="t">${l.is_read?'✉️':'📩'} ${escapeHtml(l.title)}</div>
+                  <div class="s">${escapeHtml((l.created_at||'').slice(0,10))}</div>
+                </div>
+                <div>‹</div>
+              </div>`).join('') : `<div class="empty"><div class="ic">💌</div>هنوز نامه‌ای نرسیده.</div>`}
+          </div>
+        </div>
+      `;
+      $$('#let-list .list-item').forEach(el => {
+        el.addEventListener('click', ()=> openLetter(parseInt(el.dataset.id,10)));
+      });
+    } catch(e){
+      view.innerHTML = `<div class="card"><p>خطا در بارگذاری نامه‌ها.</p></div>`;
+    }
+  }
+
+  async function openLetter(id){
+    try {
+      const data = await api('/letters');
+      const l = (data.items || []).find(x=>x.id===id);
+      if (!l) { toast('نامه پیدا نشد', 'error'); return; }
+      await api('/letters/' + id + '/read', { method:'POST' });
+      const overlay = document.createElement('div');
+      overlay.className = 'modal';
+      overlay.innerHTML = `
+        <div class="box" style="background:transparent; border:none; padding:0;">
+          <div class="letter">
+            <h3>${escapeHtml(l.title)}</h3>
+            <p>${escapeHtml(l.text)}</p>
+            <div class="date">${escapeHtml((l.created_at||'').slice(0,10))}</div>
+          </div>
+          <div class="btn-row" style="margin-top:12px;">
+            <button class="btn ghost" id="let-close">بستن</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(overlay);
+      overlay.querySelector('#let-close').addEventListener('click', ()=>{
+        overlay.remove();
+        renderLetters();
+      });
+      overlay.addEventListener('click', (e)=>{
+        if (e.target===overlay) { overlay.remove(); renderLetters(); }
+      });
+    } catch(e){ toast('خطا', 'error'); }
+  }
+
+  // ---------- Events ----------
+  async function renderEvents(){
+    view.innerHTML = `<div class="loading"><div class="spinner"></div>در حال بارگذاری...</div>`;
+    try {
+      const data = await api('/events');
+      const items = data.items || [];
+      view.innerHTML = `
+        <div class="view">
+          <div class="card">
+            <h2>🌷 مناسبت‌ها</h2>
+            ${items.length ? items.map(e=>`
+              <div class="event-card" style="margin-bottom:8px;">
+                <div class="d"><div class="n">${e.days_left}</div><div class="l">روز</div></div>
+                <div class="info">
+                  <div class="t">${escapeHtml(e.title)}</div>
+                  <div class="s">${escapeHtml(e.date_fa || '')}</div>
+                </div>
+              </div>`).join('') : '<p class="muted">مناسبتی ثبت نشده.</p>'}
+          </div>
+        </div>
+      `;
+    } catch(e){
+      view.innerHTML = `<div class="card"><p>خطا.</p></div>`;
+    }
+  }
+
+  // ---------- Settings ----------
+  async function renderSettings(){
+    try {
+      const data = await api('/settings');
+      const s = data.settings || {};
+      const isAdmin = state.user && state.user.is_admin;
+      view.innerHTML = `
+        <div class="view">
+          <div class="card">
+            <h2>⚙️ تنظیمات</h2>
+            <p class="tiny muted">تاریخ شروع رابطه: <b>${escapeHtml(s.start_date || '-')}</b></p>
+            <p class="tiny muted">روز دختر: <b>${escapeHtml(s.girl_day_date || 'محاسبه خودکار')}</b></p>
+            <p class="tiny muted">پیام صبح: <b>${s.morning_msg_enabled ? 'فعال' : 'غیرفعال'}</b></p>
+            <p class="tiny muted">پیام شب: <b>${s.evening_msg_enabled ? 'فعال' : 'غیرفعال'}</b></p>
+          </div>
+          ${isAdmin ? `
+          <div class="card">
+            <h2>🛠 پنل مدیر</h2>
+            <label class="label">تاریخ شروع (شمسی، مثلاً 1402-06-15)</label>
+            <input class="input" id="s-start" value="${escapeHtml(s.start_date || '')}" />
+            <label class="label">تاریخ روز دختر (شمسی، خالی = خودکار)</label>
+            <input class="input" id="s-girl" value="${escapeHtml(s.girl_day_date || '')}" />
+            <div class="btn-row" style="margin-top:10px;">
+              <label class="switch"><input type="checkbox" id="s-morning" ${s.morning_msg_enabled?'checked':''}/> پیام صبح</label>
+              <label class="switch"><input type="checkbox" id="s-evening" ${s.evening_msg_enabled?'checked':''}/> پیام شب</label>
+            </div>
+            <div class="btn-row" style="margin-top:10px;">
+              <button class="btn" id="s-save">💾 ذخیره</button>
+            </div>
+          </div>` : ''}
+          <div class="card">
+            <h2>🔒 حریم خصوصی</h2>
+            <p class="tiny">• داده‌ها در فضای خصوصی ذخیره می‌شوند.</p>
+            <p class="tiny">• مدیر پروژه به محتوا دسترسی دارد.</p>
+            <p class="tiny">• هیچ اطلاعاتی به شخص ثالث ارسال نمی‌شود.</p>
+          </div>
+        </div>
+      `;
+      if (isAdmin) {
+        $('#s-save').addEventListener('click', async ()=>{
+          const body = {
+            start_date: $('#s-start').value.trim(),
+            girl_day_date: $('#s-girl').value.trim(),
+            morning_msg_enabled: $('#s-morning').checked ? 1 : 0,
+            evening_msg_enabled: $('#s-evening').checked ? 1 : 0,
+          };
+          try {
+            await api('/settings', { method:'PUT', body });
+            toast('ذخیره شد', 'success');
+          } catch(e){ toast('خطا', 'error'); }
+        });
+      }
+    } catch(e){
+      view.innerHTML = `<div class="card"><p>خطا در بارگذاری تنظیمات.</p></div>`;
+    }
+  }
+
+  function renderMore(){
+    view.innerHTML = `
+      <div class="view">
+        <div class="menu-grid">
+          <div class="menu-item" data-nav="letters"><span class="ic">💌</span><div class="tt">نامه‌ها</div></div>
+          <div class="menu-item" data-nav="events"><span class="ic">🌷</span><div class="tt">مناسبت‌ها</div></div>
+          <div class="menu-item" data-nav="settings"><span class="ic">⚙️</span><div class="tt">تنظیمات</div></div>
+          <div class="menu-item" id="open-bot"><span class="ic">🤖</span><div class="tt">باز کردن ربات</div></div>
+        </div>
+      </div>
+    `;
+    $$('.menu-item').forEach(el => {
+      if (el.id === 'open-bot') {
+        el.addEventListener('click', ()=>{
+          if (tg && tg.switchInlineQuery) {
+            // fallback: close webapp
+            try { tg.close(); } catch(e){}
+          } else {
+            toast('از ربات استفاده کن', 'info');
+          }
+        });
+      } else {
+        el.addEventListener('click', ()=> navigate(el.dataset.nav));
+      }
+    });
+  }
+
+  // ---------- Navigation ----------
+  async function navigate(v){
+    state.currentView = v;
+    $$('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.view === v || (v==='letters' && b.dataset.view==='more') || (v==='events' && b.dataset.view==='more') || (v==='settings' && b.dataset.view==='more')));
+    if (v === 'home') { await loadHome(); renderHome(); }
+    else if (v === 'memories') renderMemories();
+    else if (v === 'voice') renderVoice();
+    else if (v === 'gallery') renderGallery();
+    else if (v === 'letters') renderLetters();
+    else if (v === 'events') renderEvents();
+    else if (v === 'settings') renderSettings();
+    else if (v === 'more') renderMore();
+    window.scrollTo({ top:0, behavior:'smooth' });
+  }
+
+  $$('.nav-btn').forEach(b => b.addEventListener('click', ()=> navigate(b.dataset.view)));
+
+  // ---------- Utils ----------
+  function escapeHtml(s){
+    if (s == null) return '';
+    return String(s)
+      .replaceAll('&','&amp;')
+      .replaceAll('<','&lt;')
+      .replaceAll('>','&gt;')
+      .replaceAll('"','&quot;')
+      .replaceAll("'",'&#39;');
+  }
+  function debounce(fn, ms){
+    let t; return function(...a){ clearTimeout(t); t = setTimeout(()=>fn.apply(this,a), ms); };
+  }
+
+  // ---------- Boot ----------
+  (async function init(){
+    const ok = await auth();
+    if (!ok) return;
+    await navigate('home');
+  })();
+})();
+</script>
+</body>
+</html>
